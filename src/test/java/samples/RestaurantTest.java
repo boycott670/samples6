@@ -1,7 +1,6 @@
 package samples;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
@@ -50,7 +49,5 @@ public class RestaurantTest {
 		restaurant.customerSays(tableId, "John: Fish for 2");
 		assertEquals("Fish for 2, Soup, Chips, Fish for 2",
 				restaurant.createOrder(tableId));
-		
-		assertTrue(true);
 	}
 }
