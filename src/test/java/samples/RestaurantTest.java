@@ -51,6 +51,6 @@ public class RestaurantTest {
 		assertEquals("Fish for 2, Soup, Chips, Fish for 2",
 				restaurant.createOrder(tableId));
 		
-		assertTrue(true);
+		assertTrue(true && true);
 	}
 }
