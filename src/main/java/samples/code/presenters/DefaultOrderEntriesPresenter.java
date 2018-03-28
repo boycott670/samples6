@@ -10,7 +10,9 @@ public class DefaultOrderEntriesPresenter implements OrderEntriesPresenter {
 	@Override
 	public String present(final List<OrderEntry> entries) {
 
-		return entries.stream().map(OrderEntry::getRecipe).collect(Collectors.joining(", "));
+		return entries.stream()
+			.map(entry -> entry.getRecipe() + (entry.getQuantity() == 1 ? "" : " for " + entry.getQuantity()))
+			.collect(Collectors.joining(", "));
 		
 	}
 
@@ -20,6 +22,10 @@ public class DefaultOrderEntriesPresenter implements OrderEntriesPresenter {
 		return "MISSING " + missingOrder;
 	}
 
-	
-	
+	@Override
+	public String errorMessage(int missingOrder, String recipe, int quantity) {
+		
+		return String.format("MISSING %d for %s for %d", missingOrder, recipe, quantity);
+		
+	}
 }

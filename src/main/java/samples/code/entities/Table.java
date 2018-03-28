@@ -23,8 +23,9 @@ public class Table {
 	public void addOrderEntry (final String orderEntry, final String separator, final OrderEntryParser parser)
 	{
 		final OrderEntry entry = parser.parse(orderEntry, separator);
+		int indice = -1;
 		
-		if (entries.contains(entry))
+		if ((indice = entries.indexOf(entry)) != -1)
 		{
 			entries.remove(entry);
 		}
@@ -33,7 +34,7 @@ public class Table {
 		{
 			if (!entries.isEmpty())
 			{
-				entries.add(new OrderEntry(entry.getClient(), entries.get(entries.size() - 1).getRecipe()));
+				entries.add(new OrderEntry(entry.getClient(), entries.get(entries.size() - 1).getRecipe(), entry.getQuantity()));
 			}
 			else
 			{
@@ -42,7 +43,12 @@ public class Table {
 		}
 		else
 		{
-			entries.add(entry);
+			 if(indice == -1)
+			 { 
+				 entries.add(entry);
+			 }else 
+				 entries.add(indice, entry);
+			 
 		}
 		
 	}
@@ -53,6 +59,30 @@ public class Table {
 		{
 			return presenter.errorMessage(size - entries.size());
 		}
+		
+		for (int i = 0 ; i < entries.size() ; i++)
+		{
+			if (entries.get(i).getQuantity() > 1)
+			{
+				int counter = 1;
+				
+				for (int j = 0 ; j < entries.size() ; j++)
+				{
+					if (i != j &&
+						entries.get(j).getRecipe().equals(entries.get(i).getRecipe()) &&
+						entries.get(j).getQuantity() == entries.get(i).getQuantity())
+					{
+						counter ++;
+					}
+				}
+				
+				if (counter != entries.get(i).getQuantity())
+				{
+					return presenter.errorMessage(entries.get(i).getQuantity() - counter, entries.get(i).getRecipe(), entries.get(i).getQuantity());
+				}
+			}
+		}
+		
 		return presenter.present(entries);
 	}
 	

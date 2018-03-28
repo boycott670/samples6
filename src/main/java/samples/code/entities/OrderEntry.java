@@ -4,10 +4,12 @@ public class OrderEntry {
 
 	private final String client;
 	private final String recipe;
+	private final int quantity;
 	
-	public OrderEntry(String client, String recipe) {
+	public OrderEntry(String client, String recipe, final int quantity) {
 		this.client = client;
 		this.recipe = recipe;
+		this.quantity = quantity;
 	}
 
 	public String getClient() {
@@ -16,6 +18,10 @@ public class OrderEntry {
 
 	public String getRecipe() {
 		return recipe;
+	}
+
+	public int getQuantity() {
+		return quantity;
 	}
 
 	@Override
